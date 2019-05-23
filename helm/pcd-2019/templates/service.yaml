@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pcd-2019.fullname" . }}
+  labels:
+{{ include "pcd-2019.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "pcd-2019.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
