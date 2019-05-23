@@ -6,3 +6,6 @@ build:
 
 run-test:
 	docker run -it --rm --network host $(IMAGE_NAME):$(VERSION)
+
+push:
+	docker push $(IMAGE_NAME):$(VERSION)
