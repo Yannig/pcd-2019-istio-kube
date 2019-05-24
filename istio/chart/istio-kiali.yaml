@@ -1,0 +1,17 @@
+kiali:
+  enabled: true
+  createDemoSecret: true
+  contextPath: /
+  dashboard:
+    grafanaURL: https://grafana.pcd-2019.aios.sh/
+    jaegerURL:  /jaeger
+
+  ingress:
+    enabled: true
+    hosts:
+      - "kiali.pcd-2019.aios.sh"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    tls:
+      - secretName: kiali-secret-tls

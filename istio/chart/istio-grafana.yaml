@@ -1,0 +1,12 @@
+grafana:
+  enabled: true
+  contextPath: /
+  ingress:
+    enabled: true
+    hosts:
+      - "grafana.pcd-2019.aios.sh"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    tls:
+      - secretName: grafana-secret-tls
