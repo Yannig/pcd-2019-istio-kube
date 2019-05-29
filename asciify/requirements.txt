@@ -1,5 +1,0 @@
-Flask
-healthcheck
-six
-asciify
-click==6.6
