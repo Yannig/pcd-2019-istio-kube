@@ -44,3 +44,7 @@ create-cluster:
 		--node-volume-size=40 \
 		--nodes=1 --nodes-max=5 --asg-access -t t2.xlarge \
 		--external-dns-access -r $(REGION)
+
+destroy-cluster:
+	eksctl delete cluster --name=$(CLUSTER_NAME) -r $(REGION)
+
