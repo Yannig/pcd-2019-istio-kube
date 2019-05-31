@@ -23,7 +23,7 @@ istio-repo:
 	helm repo add istio.io https://storage.googleapis.com/istio-release/releases/$(ISTIO_VERSION)/charts
 
 istio-init:
-	helm upgrade --install istio-init istio.io/istio-init --namespace istio-system
+	helm upgrade --install istio-init istio.io/istio-init --namespace istio-system --wait
 
 istio-basic: istio-repo istio-init
 
