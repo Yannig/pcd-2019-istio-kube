@@ -1,0 +1,6 @@
+---
+
+sources:
+  - service
+  - ingress
+  - istio-gateway

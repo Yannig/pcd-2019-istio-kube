@@ -10,6 +10,14 @@ Repository d'exemple pour REX Istio et Kubernetes
 
     make tiller
 
+## Installation controleur Ingress
+
+    make nginx-ingress
+
+## Installation external-dns
+
+    make external-dns
+
 ## Installation istio
 
     make istio-basic

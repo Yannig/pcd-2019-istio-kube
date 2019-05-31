@@ -48,3 +48,12 @@ create-cluster:
 destroy-cluster:
 	eksctl delete cluster --name=$(CLUSTER_NAME) -r $(REGION)
 
+.PHONY: external-dns
+external-dns:
+	helm upgrade --install external-dns stable/external-dns \
+		--namespace kube-system -f external-dns/chart.yaml
+
+nginx-ingress:
+	helm upgrade --install nginx-ingress stable/nginx-ingress \
+		--namespace nginx-ingress --set rbac.create=true \
+		--set controller.publishService.enabled=true
