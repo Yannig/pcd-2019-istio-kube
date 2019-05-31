@@ -1,5 +1,5 @@
+---
 global:
-
   k8sIngress:
     enabled: true
     enableHttps: true

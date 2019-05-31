@@ -1,4 +1,6 @@
 ISTIO_VERSION="1.1.7"
+ISTIO_BASIC_URL="pcd-2019.aios.sh"
+ACTIVATE_TLS="true"
 
 tiller:
 	kubectl create serviceaccount \
@@ -27,15 +29,10 @@ istio-init:
 
 istio-basic: istio-repo istio-init
 
-istio-small: istio-basic
+istio-components:
+	cat istio/chart/*.yaml |\
+	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" |\
+	sed "s/ACTIVATE_TLS/$(ACTIVATE_TLS)/" |\
 	helm upgrade --install istio istio.io/istio \
 		--namespace istio-system \
-		-f istio/chart/istio.yaml --wait
-
-istio-full: istio-basic
-	helm upgrade --install istio istio.io/istio \
-		--namespace istio-system \
-		-f istio/chart/istio.yaml \
-		-f istio/chart/istio-kiali.yaml \
-		-f istio/chart/istio-grafana.yaml \
-		-f istio/chart/istio-jaeger.yaml
+		-f -
