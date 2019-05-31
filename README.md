@@ -6,9 +6,17 @@ Repository d'exemple pour REX Istio et Kubernetes
 
     make create-cluster
 
+## Init Helm
+
+    make tiller
+
 ## Installation istio
 
-    make istio-basic istio-components
+    make istio-basic
+
+Attendre le lancement des jobs dans l'espace de nom kube-sytem
+
+    make istio-components
 
 ## Suppression cluster
 
