@@ -1,6 +1,8 @@
 ISTIO_VERSION="1.1.7"
 ISTIO_BASIC_URL="pcd-2019.aios.sh"
 ACTIVATE_TLS="true"
+REGION="eu-west-3"
+CLUSTER_NAME="pcd-2019"
 
 tiller:
 	kubectl create serviceaccount \
@@ -36,3 +38,9 @@ istio-components:
 	helm upgrade --install istio istio.io/istio \
 		--namespace istio-system \
 		-f -
+
+create-cluster:
+	eksctl create cluster --name=$(CLUSTER_NAME) --ssh-access \
+		--node-volume-size=40 \
+		--nodes=1 --nodes-max=5 --asg-access -t t2.xlarge \
+		--external-dns-access -r $(REGION)
