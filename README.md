@@ -2,6 +2,37 @@
 
 Repository d'exemple pour REX Istio et Kubernetes
 
+
+```mermaid
+graph LR
+  subgraph aws
+    route53
+    lb((lb))
+    subgraph EKS
+      subgraph system
+        external-dns
+        cert-manager
+      end
+      subgraph ingress
+        nginx
+      end
+      subgraph istio
+        gateway
+        certificate
+      end
+    end
+  end
+  external-dns -.-> route53
+  gateway -.-> external-dns
+  nginx -.-> external-dns
+  certificate -.-> cert-manager
+  gateway -.-> certificate
+  nginx -.-> cert-manager
+  cert-manager -.-> letsencrypt
+  lb -.-> gateway
+  lb -.-> nginx
+```
+
 ## Création cluster
 
     make create-cluster
