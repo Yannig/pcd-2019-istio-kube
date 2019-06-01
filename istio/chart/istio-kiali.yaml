@@ -11,7 +11,7 @@ kiali:
     hosts:
       - "kiali.ISTIO_BASIC_URL"
     annotations:
-      kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "ACTIVATE_TLS"
     tls:
       - secretName: kiali-secret-tls
+        hosts: ["kiali.ISTIO_BASIC_URL"]
