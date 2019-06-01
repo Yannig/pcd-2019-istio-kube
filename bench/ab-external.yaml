@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ab-external
+  name: ab-external
+spec:
+  selector:
+    matchLabels:
+      app: ab-external
+  template:
+    metadata:
+      labels:
+        app: ab-external
+    spec:
+      containers:
+      - image: nicolaka/netshoot
+        name: netshoot
+        command:
+          - "sh"
+          - "-c"
+          - "while sleep 1 ; do ab -n 1 http://mailhog.test-istio:8025/ ; done"

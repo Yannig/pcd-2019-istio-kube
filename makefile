@@ -85,3 +85,12 @@ cert-manager-alternative:
 
 lets-encrypt-issuer:
 	kubectl apply -f cert-manager/lets-encrypt-issuer.yaml
+
+external-test:
+	kubectl apply -f bench/ab-external.yaml
+
+mesh-test:
+	kubectl apply -f bench/ab-mesh.yaml
+
+stop-test:
+	kubectl delete -f bench/

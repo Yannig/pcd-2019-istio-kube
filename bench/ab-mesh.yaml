@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ab-mesh
+  name: ab-mesh
+  namespace: test-istio
+spec:
+  selector:
+    matchLabels:
+      app: ab-mesh
+  template:
+    metadata:
+      labels:
+        app: ab-mesh
+    spec:
+      containers:
+      - image: nicolaka/netshoot
+        name: netshoot
+        command:
+          - "sh"
+          - "-c"
+          - "while sleep 1 ; do ab -n 1 http://mailhog:8025/ ; done"
