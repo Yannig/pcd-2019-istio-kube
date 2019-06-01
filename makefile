@@ -94,3 +94,7 @@ mesh-test:
 
 stop-test:
 	kubectl delete -f bench/
+
+istio-ingress:
+	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" mailhog/istio/gateway.yaml | kubectl apply -f -
+	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" mailhog/istio/virtualservice.yaml | kubectl apply -f -
