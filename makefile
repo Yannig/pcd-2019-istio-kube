@@ -43,7 +43,8 @@ create-cluster:
 	eksctl create cluster --name=$(CLUSTER_NAME) --ssh-access \
 		--node-volume-size=40 \
 		--nodes=1 --nodes-max=5 --asg-access -t t2.xlarge \
-		--external-dns-access -r $(REGION)
+		--external-dns-access -r $(REGION) \
+		--kubeconfig ./kubeconfig/$(CLUSTER_NAME).conf
 
 destroy-cluster:
 	eksctl delete cluster --name=$(CLUSTER_NAME) -r $(REGION)
@@ -51,7 +52,7 @@ destroy-cluster:
 .PHONY: external-dns
 external-dns:
 	helm upgrade --install external-dns stable/external-dns \
-		--namespace kube-system -f external-dns/chart.yaml
+		--namespace kube-system -f external-dns/chart.yaml --set aws.region=$(REGION)
 
 nginx-ingress:
 	helm upgrade --install nginx-ingress stable/nginx-ingress \
