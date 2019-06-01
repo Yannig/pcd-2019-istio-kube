@@ -1,4 +1,3 @@
----
 global:
   k8sIngress:
     enabled: true

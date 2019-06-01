@@ -1,4 +1,3 @@
----
 kiali:
   enabled: true
   createDemoSecret: true
