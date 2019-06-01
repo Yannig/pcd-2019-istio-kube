@@ -103,3 +103,8 @@ stop-test:
 istio-ingress:
 	envsubst < mailhog/istio/gateway.yaml | kubectl apply -f -
 	envsubst < mailhog/istio/virtualservice.yaml | kubectl apply -f -
+
+demo-app:
+	kubectl get ns demo || kubectl create ns demo
+	kubectl label namespace demo istio-injection=enabled --overwrite
+	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/platform/kube/bookinfo.yaml
