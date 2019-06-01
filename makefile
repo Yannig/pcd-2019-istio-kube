@@ -3,7 +3,7 @@ ISTIO_BASIC_URL="pcd-2019.aios.sh"
 ACTIVATE_TLS="true"
 REGION="eu-west-3"
 CLUSTER_NAME="pcd-2019"
-GATEWAY_CREDENTIAL="gateway-istio-secret-staging-tls"
+GATEWAY_CREDENTIAL="gateway-istio-secret-prod-tls"
 
 tiller:
 	kubectl create serviceaccount \

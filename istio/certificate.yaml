@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: GATEWAY_CREDENTIAL
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-prod
     kind: ClusterIssuer
   commonName: "ISTIO_BASIC_URL"
   dnsNames:
