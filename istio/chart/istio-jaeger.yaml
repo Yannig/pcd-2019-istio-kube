@@ -6,6 +6,7 @@ tracing:
       - "kiali.ISTIO_BASIC_URL"
     annotations:
       kubernetes.io/tls-acme: "ACTIVATE_TLS"
+      certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     tls:
       - secretName: kiali-secret-tls
         hosts: ["kiali.ISTIO_BASIC_URL"]

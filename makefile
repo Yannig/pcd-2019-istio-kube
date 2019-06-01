@@ -76,7 +76,7 @@ cert-manager:
 	helm inspect jetstack/cert-manager > /dev/null
 	# Install chart without validation
 	helm template ~/.helm/cache/archive/cert-manager-v0.8.0.tgz --name cert-manager \
-		--namespace=kube-system -f cert-manager/chart.yaml | kubectl apply -f - --validate=false
+		--namespace=kube-system | kubectl apply -f - --validate=false
 
 cert-manager-alternative:
 	kubectl get ns cert-manager || kubectl create namespace cert-manager
