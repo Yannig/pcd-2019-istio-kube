@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mailhog-ingress
+  namespace: test-istio
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "mailhog-ingress.pcd-2019.aios.sh"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mailhog
+          servicePort: 8025
