@@ -58,3 +58,20 @@ nginx-ingress:
 	helm upgrade --install nginx-ingress stable/nginx-ingress \
 		--namespace nginx-ingress --set rbac.create=true \
 		--set controller.publishService.enabled=true
+
+# Ne fonctionne pas directement avec Helm actuellement en version 1.12 de Kube
+cert-manager:
+	kubectl apply \
+		-f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+	kubectl label namespace kube-system certmanager.k8s.io/disable-validation="true" --overwrite
+	helm repo add jetstack https://charts.jetstack.io
+	# Download chart in cache directory
+	helm inspect jetstack/cert-manager > /dev/null
+	# Install chart without validation
+	helm template ~/.helm/cache/archive/cert-manager-v0.8.0.tgz --name cert-manager \
+		--namespace=kube-system | kubectl apply -f - --validate=false
+
+cert-manager-alternative:
+	kubectl get ns cert-manager || kubectl create namespace cert-manager
+	kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true --overwrite
+	kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.8.0/cert-manager.yaml --validate=false
