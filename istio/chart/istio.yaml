@@ -34,7 +34,3 @@ mixer:
 
 pilot:
   traceSampling: 100.0
-
-certmanager:
-  enabled: true
-  email: yannig.perre@gmail.com

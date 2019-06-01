@@ -1,0 +1,5 @@
+ingressShim:
+  defaultIssuerName: "letsencrypt-prod"
+  defaultIssuerKind: "ClusterIssuer"
+
+extraArgs: [ "--issuer-ambient-credentials" ]
