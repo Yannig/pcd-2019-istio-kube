@@ -1,9 +1,12 @@
-ISTIO_VERSION="1.1.7"
-ISTIO_BASIC_URL="pcd-2019.aios.sh"
-ACTIVATE_TLS="true"
-REGION="eu-west-3"
-CLUSTER_NAME="pcd-2019"
-GATEWAY_CREDENTIAL="gateway-istio-secret-prod-tls"
+ISTIO_VERSION=1.1.7
+ISTIO_BASIC_URL=pcd-2019.aios.sh
+ACTIVATE_TLS=true
+REGION=eu-west-3
+CLUSTER_NAME=pcd-2019
+GATEWAY_CREDENTIAL=gateway-istio-secret-prod-tls
+DEFAULT_EMAIL=yannig.perre@aios.sh
+
+export GATEWAY_CREDENTIAL ISTIO_BASIC_URL CLUSTER_NAME ACTIVATE_TLS REGION DEFAULT_EMAIL
 
 tiller:
 	kubectl create serviceaccount \
@@ -33,12 +36,9 @@ istio-init:
 istio-basic: istio-repo istio-init
 
 istio-components:
-	cat istio/chart/*.yaml |\
-	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" |\
-	sed "s/ACTIVATE_TLS/$(ACTIVATE_TLS)/" |\
+	cat istio/chart/*.yaml | envsubst | \
 	helm upgrade --install istio istio.io/istio \
-		--namespace istio-system \
-		-f -
+		--namespace istio-system -f -
 
 patch-istio-gateway:
 	kubectl -n istio-system patch gateway \
@@ -46,8 +46,7 @@ patch-istio-gateway:
 		-p="[{"op": "replace", "path": "/spec/servers/1/tls", "value": {"credentialName": "$(GATEWAY_CREDENTIAL)", "mode": "SIMPLE", "privateKey": "sds", "serverCertificate": "sds"}}]"
 
 istio-certificate:
-	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" istio/certificate.yaml | \
-		sed "s/GATEWAY_CREDENTIAL/$(GATEWAY_CREDENTIAL)/" | kubectl apply -f -
+	envsubst < istio/certificate.yaml | kubectl apply -f -
 
 create-cluster:
 	eksctl create cluster --name=$(CLUSTER_NAME) --ssh-access \
@@ -88,7 +87,7 @@ cert-manager-alternative:
 	kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.8.0/cert-manager.yaml --validate=false
 
 lets-encrypt-issuer:
-	kubectl apply -f cert-manager/lets-encrypt-issuer.yaml
+	envsubst < cert-manager/lets-encrypt-issuer.yaml | kubectl apply -f -
 
 external-test:
 	kubectl apply -f bench/ab-external.yaml
@@ -100,5 +99,5 @@ stop-test:
 	kubectl delete -f bench/
 
 istio-ingress:
-	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" mailhog/istio/gateway.yaml | kubectl apply -f -
-	sed "s/ISTIO_BASIC_URL/$(ISTIO_BASIC_URL)/g" mailhog/istio/virtualservice.yaml | kubectl apply -f -
+	envsubst < mailhog/istio/gateway.yaml | kubectl apply -f -
+	envsubst < mailhog/istio/virtualservice.yaml | kubectl apply -f -

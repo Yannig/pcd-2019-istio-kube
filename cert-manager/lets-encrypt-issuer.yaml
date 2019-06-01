@@ -7,7 +7,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: yannig.perre@aios.sh
+    email: $DEFAULT_EMAIL
     privateKeySecretRef:
       name: letsencrypt-prod
     http01: {}
@@ -16,7 +16,7 @@ spec:
       providers:
         - name: pcd-2019
           route53:
-            region: "eu-west-3"
+            region: "$REGION"
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
@@ -26,7 +26,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: yannig.perre@aios.sh
+    email: $DEFAULT_EMAIL
     privateKeySecretRef:
       name: letsencrypt-staging
     http01: {}
@@ -35,4 +35,4 @@ spec:
       providers:
         - name: pcd-2019
           route53:
-            region: "eu-west-3"
+            region: "$REGION"

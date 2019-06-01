@@ -4,10 +4,10 @@ grafana:
   ingress:
     enabled: true
     hosts:
-      - "grafana.ISTIO_BASIC_URL"
+      - "grafana.$ISTIO_BASIC_URL"
     annotations:
-      kubernetes.io/tls-acme: "ACTIVATE_TLS"
+      kubernetes.io/tls-acme: "$ACTIVATE_TLS"
       certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     tls:
       - secretName: grafana-secret-tls
-        hosts: ["grafana.ISTIO_BASIC_URL"]
+        hosts: ["grafana.$ISTIO_BASIC_URL"]

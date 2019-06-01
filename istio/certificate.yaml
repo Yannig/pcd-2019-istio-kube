@@ -4,18 +4,18 @@ metadata:
   name: gateway-istio-certificate
   namespace: istio-system
 spec:
-  secretName: GATEWAY_CREDENTIAL
+  secretName: $GATEWAY_CREDENTIAL
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: "ISTIO_BASIC_URL"
+  commonName: "$ISTIO_BASIC_URL"
   dnsNames:
-    - "ISTIO_BASIC_URL"
-    - "*.ISTIO_BASIC_URL"
+    - "$ISTIO_BASIC_URL"
+    - "*.$ISTIO_BASIC_URL"
   acme:
     config:
       - dns01:
           provider: pcd-2019
         domains:
-          - "ISTIO_BASIC_URL"
-          - "*.ISTIO_BASIC_URL"
+          - "$ISTIO_BASIC_URL"
+          - "*.$ISTIO_BASIC_URL"

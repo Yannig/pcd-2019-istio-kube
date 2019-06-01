@@ -12,7 +12,7 @@ spec:
         name: http2-mailhog
         protocol: HTTP2
       hosts:
-        - "mailhog-istio.ISTIO_BASIC_URL"
+        - "mailhog-istio.$ISTIO_BASIC_URL"
       tls:
         httpsRedirect: true
     - port:
@@ -20,7 +20,7 @@ spec:
         name: https-mailhog
         protocol: HTTPS
       hosts:
-        - "mailhog-istio.ISTIO_BASIC_URL"
+        - "mailhog-istio.$ISTIO_BASIC_URL"
       tls:
         mode: SIMPLE
-        credentialName: "gateway-istio-tls"
+        credentialName: "$GATEWAY_CREDENTIAL"

@@ -5,7 +5,7 @@ metadata:
   namespace: test-istio
 spec:
   hosts:
-  - "mailhog-istio.ISTIO_BASIC_URL"
+  - "mailhog-istio.$ISTIO_BASIC_URL"
   gateways:
   - mailhog-gateway
   http:

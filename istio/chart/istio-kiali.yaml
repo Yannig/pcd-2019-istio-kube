@@ -3,16 +3,16 @@ kiali:
   createDemoSecret: true
   contextPath: /
   dashboard:
-    grafanaURL: https://grafana.ISTIO_BASIC_URL/
+    grafanaURL: https://grafana.$ISTIO_BASIC_URL/
     jaegerURL:  /jaeger
 
   ingress:
     enabled: true
     hosts:
-      - "kiali.ISTIO_BASIC_URL"
+      - "kiali.$ISTIO_BASIC_URL"
     annotations:
-      kubernetes.io/tls-acme: "ACTIVATE_TLS"
+      kubernetes.io/tls-acme: "$ACTIVATE_TLS"
       certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     tls:
       - secretName: kiali-secret-tls
-        hosts: ["kiali.ISTIO_BASIC_URL"]
+        hosts: ["kiali.$ISTIO_BASIC_URL"]
