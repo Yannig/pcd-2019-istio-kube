@@ -19,4 +19,4 @@ spec:
         command:
           - "sh"
           - "-c"
-          - "while sleep 1 ; do ab -n 1 http://mailhog.test-istio:8025/ ; done"
+          - "while sleep 0.`echo $RANDOM%15 | bc` ; do curl -v https://mailhog-ingress.pcd-2019.aios.sh 2>&1 > /dev/null | grep '^< HTTP'; done"

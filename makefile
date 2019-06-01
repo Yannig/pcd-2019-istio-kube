@@ -95,6 +95,8 @@ external-test:
 mesh-test:
 	kubectl apply -f bench/ab-mesh.yaml
 
+start-test: external-test mesh-test
+
 stop-test:
 	kubectl delete -f bench/
 
