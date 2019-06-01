@@ -18,6 +18,14 @@ Repository d'exemple pour REX Istio et Kubernetes
 
     make external-dns
 
+## Installation gestionnaire de certificats
+
+    make cert-manager
+
+## Définition de l'émetteur de certificat par défaut
+
+    make lets-encrypt-issuer
+
 ## Installation istio
 
     make istio-basic
