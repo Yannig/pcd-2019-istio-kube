@@ -60,6 +60,7 @@ nginx-ingress:
 		--set controller.publishService.enabled=true
 
 # Ne fonctionne pas directement avec Helm actuellement en version 1.12 de Kube
+.PHONY: cert-manager
 cert-manager:
 	kubectl apply \
 		-f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
@@ -69,7 +70,7 @@ cert-manager:
 	helm inspect jetstack/cert-manager > /dev/null
 	# Install chart without validation
 	helm template ~/.helm/cache/archive/cert-manager-v0.8.0.tgz --name cert-manager \
-		--namespace=kube-system | kubectl apply -f - --validate=false
+		--namespace=kube-system -f cert-manager/chart.yaml | kubectl apply -f - --validate=false
 
 cert-manager-alternative:
 	kubectl get ns cert-manager || kubectl create namespace cert-manager
