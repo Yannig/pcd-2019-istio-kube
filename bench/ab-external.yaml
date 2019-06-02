@@ -12,11 +12,20 @@ spec:
     metadata:
       labels:
         app: ab-external
+        type: test
     spec:
       containers:
       - image: nicolaka/netshoot
         name: netshoot
+        env:
+          - name: TYPE
+            value: ingress
         command:
           - "sh"
           - "-c"
-          - "while sleep 0.`echo $RANDOM%15 | bc` ; do date +%s ; curl -v https://mailhog-ingress.pcd-2019.aios.sh 2>&1 > /dev/null | grep '^< HTTP'; done"
+          - |-
+              while sleep 0.`echo $RANDOM%15 | bc`
+              do
+                result=`curl -v https://mailhog-$TYPE.pcd-2019.aios.sh 2>&1 > /dev/null | grep "^< HTTP"`
+                echo "`date +%s` $TYPE $result"
+              done
