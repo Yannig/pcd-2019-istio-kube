@@ -74,6 +74,7 @@ Attendre le lancement des jobs dans l'espace de nom kube-sytem
 - Kiali : https://kiali.pcd-2019.aios.sh
 - Mailhog via Ingress: https://mailhog-ingress.pcd-2019.aios.sh
 - Mailhog via Istio Gateway : https://mailhog-istio.pcd-2019.aios.sh
+- Application démo : https://demo-app.pcd-2019.aios.sh/productpage
 
 ## Activation sidecar
 

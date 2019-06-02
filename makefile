@@ -110,3 +110,15 @@ demo-app:
 	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/platform/kube/bookinfo.yaml
 	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all.yaml
 	envsubst < demo/bookinfo-gateway.yaml | kubectl apply -n demo -f -
+
+mailhog:
+	kubectl -n test-istio apply -f mailhog/good/.
+
+activate-tls:
+	kubectl -n test-istio apply -f mtls/destination-rule-mtls.yaml
+
+strict-tls:
+	kubectl -n test-istio apply -f mtls/policy-strict.yaml
+
+disable-tls:
+	kubectl -n test-istio delete -f mtls
