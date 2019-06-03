@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
 spec:
   rules:
-  - host: "mailhog-ingress.pcd-2019.aios.sh"
+  - host: "mailhog-ingress.$ISTIO_BASIC_URL"
     http:
       paths:
       - path: /
@@ -17,4 +17,4 @@ spec:
           servicePort: 8025
   tls:
     - secretName: mailhog-ingress-pcd-2019
-      hosts: ["mailhog-ingress.pcd-2019.aios.sh"]
+      hosts: ["mailhog-ingress.$ISTIO_BASIC_URL"]

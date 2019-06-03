@@ -102,8 +102,8 @@ stop-test:
 	kubectl delete -f bench/
 
 istio-ingress:
-	envsubst < mailhog/istio/gateway.yaml | kubectl apply -f -
-	envsubst < mailhog/istio/virtualservice.yaml | kubectl apply -f -
+	envsubst < mailhog/gateway.yaml | kubectl apply -f -
+	envsubst < mailhog/virtualservice.yaml | kubectl apply -f -
 
 demo-app:
 	kubectl get ns demo || kubectl create ns demo
@@ -116,8 +116,11 @@ demo-app:
 set-version:
 	envsubst < demo/set-version.yaml | kubectl apply -n demo -f -
 
+.PHONY: mailhog
 mailhog:
-	kubectl -n test-istio apply -f mailhog/good/.
+	envsubst < mailhog/mailhog.yaml | kubectl -n test-istio apply -f -
+	envsubst < mailhog/service.yaml | kubectl -n test-istio apply -f -
+	envsubst < mailhog/ingress.yaml | kubectl -n test-istio apply -f -
 
 activate-tls:
 	kubectl -n test-istio apply -f mtls/destination-rule-mtls.yaml
