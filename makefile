@@ -5,8 +5,9 @@ REGION=eu-west-3
 CLUSTER_NAME=pcd-2019
 GATEWAY_CREDENTIAL=gateway-istio-secret-prod-tls
 DEFAULT_EMAIL=yannig.perre@aios.sh
+VERSION=v1
 
-export GATEWAY_CREDENTIAL ISTIO_BASIC_URL CLUSTER_NAME ACTIVATE_TLS REGION DEFAULT_EMAIL
+export GATEWAY_CREDENTIAL ISTIO_BASIC_URL CLUSTER_NAME ACTIVATE_TLS REGION DEFAULT_EMAIL VERSION
 
 tiller:
 	kubectl create serviceaccount \
@@ -109,7 +110,11 @@ demo-app:
 	kubectl label namespace demo istio-injection=enabled --overwrite
 	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/platform/kube/bookinfo.yaml
 	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all.yaml
+	kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/virtual-service-all-v1.yaml
 	envsubst < demo/bookinfo-gateway.yaml | kubectl apply -n demo -f -
+
+set-version:
+	envsubst < demo/set-version.yaml | kubectl apply -n demo -f -
 
 mailhog:
 	kubectl -n test-istio apply -f mailhog/good/.
