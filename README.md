@@ -6,9 +6,32 @@ Repository d'exemple pour REX Istio et Kubernetes
 
 ## Création cluster
 
+La création se fait à l'aide de la commande eksctl récupérable à l'emplacement suivant : https://github.com/weaveworks/eksctl
+
+Le fichier makefile contient le target de création suivant :
+
     make create-cluster
 
+Ci-dessous la commande correspondante :
+
+    eksctl create cluster --name=$CLUSTER_NAME --ssh-access \
+      --node-volume-size=40 \
+      --nodes=1 --nodes-max=5 --asg-access -t t2.xlarge \
+      --external-dns-access -r $REGION \
+      --kubeconfig ./kubeconfig/$CLUSTER_NAME.conf
+
+
 ## Init Helm
+
+Helm (en version 2.x) est composé de deux parties : Le client Helm et le serveur Tiller.
+
+L'initialisation de la partie Tiller se décompose en 3 opérations :
+- Création d'un compte de service pour Tiller
+- Attribution de droits admin
+- Initialisation de Tiller
+
+
+Ci-dessous le target :
 
     make tiller
 
